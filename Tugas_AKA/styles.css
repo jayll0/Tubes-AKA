@@ -6,20 +6,6 @@ body {
     background-color: #f4f4f9;
   }
   
-  .container {
-    margin-top: 50px;
-    max-width: 600px;
-    margin: auto;
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  h1 {
-    color: #333;
-  }
-  
   button {
     background-color: #007BFF;
     color: white;
@@ -36,23 +22,24 @@ body {
     background-color: #0056b3;
   }
   
-  .output {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #555;
-    background: #e9ecef;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: left;
-    white-space: pre-wrap;
+  .gif-container {
+    position: relative;
+    margin: 20px auto; /* Pusatkan secara horizontal */
+    width: 300px; /* Sesuaikan lebar "TV" */
+    height: 200px; /* Sesuaikan tinggi "TV" */
+    border: 10px solid black; /* Border untuk tampilan TV */
+    border-radius: 15px; /* Sudut melengkung seperti layar TV */
+    background: #000; /* Latar belakang hitam jika GIF tidak dimuat */
   }
   
-  .time {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #333;
-    background: #f8f9fa;
-    padding: 5px;
-    border-radius: 5px;
+  .gif-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Pastikan GIF sesuai dengan ukuran container */
+    border-radius: 5px; /* Tambahkan sedikit radius untuk memperhalus tepi GIF */
+  }
+  
+  .hidden {
+    display: none; /* Sembunyikan GIF secara default */
   }
   

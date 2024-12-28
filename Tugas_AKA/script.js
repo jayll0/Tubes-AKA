@@ -1,5 +1,5 @@
 let array = [];
-let savedArray = null; // Array yang disimpan
+let savedArray = null; 
 const totalRoutes = 1000000;
 const routes = Array.from({ length: totalRoutes }, (_, i) => i + 1);
 let addedIndex = 0;
@@ -8,40 +8,33 @@ function resetArray() {
   array = [];
   addedIndex = 0;
   updateOutput("Array has been reset.");
+  showGif("gifMove");
 }
-
 function addLeft() {
-  if (addedIndex >= totalRoutes) {
-    updateOutput("All elements have been added to the array.");
-    return;
+    if (addedIndex >= totalRoutes) {
+      updateOutput("All elements have been added to the array.");
+      return;
+    }
+    const elementsToAdd = getRandomElements(routes, 100);
+    array.unshift(...elementsToAdd);
+    addedIndex += elementsToAdd.length;
+    updateOutput(`Added 100 random elements to the left. Current array length: ${array.length}\n${getArrayPreview(array)} elements.`);
+    showGif("gifMove");
   }
   
-  // Ambil 100 elemen acak dari routes
-  const elementsToAdd = getRandomElements(routes, 100);
-  
-  // Tambahkan elemen-elemen tersebut ke kiri array
-  array.unshift(...elementsToAdd);
-  addedIndex += elementsToAdd.length;
-  updateOutput(`Added 100 random elements to the left. Current array length: ${array.length}\n${getArrayPreview(arr = array)} elements.`);
-}
-
-function addRight() {
-  if (addedIndex >= totalRoutes) {
-    updateOutput("All elements have been added to the array.");
-    return;
+  function addRight() {
+    if (addedIndex >= totalRoutes) {
+      updateOutput("All elements have been added to the array.");
+      return;
+    }
+    const elementsToAdd = getRandomElements(routes, 100);
+    array.push(...elementsToAdd);
+    addedIndex += elementsToAdd.length;
+    updateOutput(`Added 100 random elements to the left. Current array length: ${array.length}\n${getArrayPreview(array)} elements.`);
+    showGif("gifMove2");
   }
-  
-  // Ambil 100 elemen acak dari routes
-  const elementsToAdd = getRandomElements(routes, 100);
-  
-  // Tambahkan elemen-elemen tersebut ke kanan array
-  array.push(...elementsToAdd);
-  addedIndex += elementsToAdd.length;
-  updateOutput(`Added 100 random elements to the left. Current array length: ${array.length}\n${getArrayPreview(arr = array)} elements.`);
-}
-
 function getRandomElements(arr, count) {
-  const shuffled = [...arr]; // Salin array agar tidak mengubah array asli
+  const shuffled = [...arr]; 
   for (let i = shuffled.length - 1; i > 0; i--) {
     const randomIndex = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[i]];
@@ -50,23 +43,23 @@ function getRandomElements(arr, count) {
 }
 
 function saveArray() {
-  if (array.length === 0) {
-    updateOutput("Cannot save. Array is empty.");
-    return;
+    if (array.length === 0) {
+      updateOutput("Cannot save. Array is empty.");
+      return;
+    }
+    savedArray = [...array];
+    updateOutput("Array has been saved.");
+    showGif("gifSave");
   }
-  savedArray = [...array];
-  updateOutput("Array has been saved.");
-}
-
-function resetToSavedArray() {
-  if (!savedArray) {
-    updateOutput("No saved array found to reset.");
-    return;
+  function resetToSavedArray() {
+    if (!savedArray) {
+      updateOutput("No saved array found to reset.");
+      return;
+    }
+    array = [...savedArray];
+    updateOutput(` Current array length: ${array.length}\n ${getArrayPreview(array)} elements.`);
+    showGif("gifSave");
   }
-  array = [...savedArray];
-  updateOutput(` Current array length: ${array.length}\n${getArrayPreview(arr = array)} elements.`);
-}
-
 function bubbleSort(arr) {
   const n = arr.length;
   for (let i = 0; i < n - 1; i++) {
@@ -94,29 +87,54 @@ function merge(left, right) {
   }
   return result.concat(left, right);
 }
-
 function handleBubbleSort() {
-  const startTime = performance.now();
-  const sortedArray = bubbleSort([...array]);
-  const endTime = performance.now();
-  updateOutput(` Total elements: ${sortedArray.length}\n Bubble Sort Result: ${getArrayPreview(sortedArray)}.`);
-  console.log(`Bubble Sort Execution Time: ${(endTime - startTime).toFixed(2)} ms`);
-}
-
-function handleMergeSort() {
-  const startTime = performance.now();
-  const sortedArray = mergeSort([...array]);
-  const endTime = performance.now();
-  updateOutput(` Total elements: ${sortedArray.length}\n Merge Sort Result: ${getArrayPreview(sortedArray)}.`);
-  console.log(`Merge Sort Execution Time: ${(endTime - startTime).toFixed(2)} ms`);
-}
-
-// Fungsi untuk menampilkan preview array (10 elemen pertama atau terakhir)
+    const startTime = performance.now();
+    const sortedArray = bubbleSort([...array]);
+    const endTime = performance.now();
+    updateOutput(` Total elements: ${sortedArray.length}\n Bubble Sort Result: ${getArrayPreview(sortedArray)}.`);
+    console.log(`Bubble Sort Execution Time: ${(endTime - startTime).toFixed(2)} ms`);
+    showGif("gifSave");
+  }
+  function handleMergeSort() {
+    const startTime = performance.now();
+    const sortedArray = mergeSort([...array]);
+    const endTime = performance.now();
+    updateOutput(` Total elements: ${sortedArray.length}\n Merge Sort Result: ${getArrayPreview(sortedArray)}.`);
+    console.log(`Merge Sort Execution Time: ${(endTime - startTime).toFixed(2)} ms`);
+    showGif("gifSave");
+  }
 function getArrayPreview(arr = array) {
-  const preview = arr; // Tampilkan 10 elemen pertama
+  const preview = arr; 
   return preview.join(', ') ;
 }
 
 function updateOutput(message) {
   document.getElementById("output").textContent = message;
 }
+function showGif(gifId) {
+    // Dapatkan semua GIF
+    const allGifs = document.querySelectorAll(".gif-container img");
+  
+    // Loop melalui semua GIF
+    allGifs.forEach((gif) => {
+      if (gif.id === gifId) {
+        gif.classList.remove("hidden"); // Tampilkan GIF yang sesuai
+      } else {
+        gif.classList.add("hidden"); // Sembunyikan GIF lainnya
+      }
+    });
+  }
+  
+  
+  
+  
+  // Contoh panggilan fungsi saat tombol diklik
+  document.querySelector('button[onclick="resetArray()"]').addEventListener('click', () => showGif('gifMove'));
+  document.querySelector('button[onclick="addLeft()"]').addEventListener('click', () => showGif('gifMove'));
+  document.querySelector('button[onclick="addRight()"]').addEventListener('click', () => showGif('gifMove2'));
+  
+  document.querySelector('button[onclick="saveArray()"]').addEventListener('click', () => showGif('gifSave'));
+  document.querySelector('button[onclick="resetToSavedArray()"]').addEventListener('click', () => showGif('gifSave'));
+  document.querySelector('button[onclick="handleBubbleSort()"]').addEventListener('click', () => showGif('gifSave'));
+  document.querySelector('button[onclick="handleMergeSort()"]').addEventListener('click', () => showGif('gifSave'));
+  
